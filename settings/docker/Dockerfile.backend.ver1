@@ -1,0 +1,36 @@
+# syntax=docker/dockerfile:1
+
+ARG PYTHON_VERSION=3.9.16
+FROM python:${PYTHON_VERSION}-slim as base
+
+ENV APP_ROOT /app
+# Prevents Python from writing pyc files.
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Переменная окружения для pipenv
+# Указывает pipenv, что надо использовать эту директорию для
+# сохранения файлов виртуального окружения
+ENV WORKON_HOME=/venv/
+
+RUN pip install --upgrade pip --no-cache-dir
+
+# RUN apt-get update && \
+#     apt-get install -y --no-install-recommends gcc
+
+RUN pip install pipenv --no-cache-dir
+
+WORKDIR ${APP_ROOT}
+
+COPY ./backend/Pipfile ${APP_ROOT}
+COPY ./backend/Pipfile.lock ${APP_ROOT}
+# COPY ./settings/.env.backend /app/.env
+
+COPY ./backend/static ${APP_ROOT}
+
+RUN pipenv sync
+RUN pipenv --clear
+
+# COPY . /app
+
+# RUN pipenv run gunicorn 'hh.wsgi' --bind=0.0.0.0:8000

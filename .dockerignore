@@ -1,0 +1,32 @@
+# node js
+
+./backend/**/node_modules/
+./backend/**/dist
+./backend/.git
+./backend/npm-debug.log
+./backend/.coverage
+./backend/.coverage.*
+./backend/.env
+./backend/.aws
+
+# python
+./frontend/__pycache__
+./frontend/*.pyc
+./frontend/*.pyo
+./frontend/*.pyd
+./frontend/.Python
+./frontend/env
+./frontend/pip-log.txt
+./frontend/pip-delete-this-directory.txt
+./frontend/.tox
+./frontend/.coverage
+./frontend/.coverage.*
+./frontend/.cache
+./frontend/nosetests.xml
+./frontend/coverage.xml
+./frontend/*.cover
+./frontend/*.log
+./frontend/.git
+./frontend/.mypy_cache
+./frontend/.pytest_cache
+./frontend/.hypothesis
