@@ -10,6 +10,7 @@ gevent = "*"
 python-dotenv = "*"
 setuptools = "*"
 psycopg2-binary = "*"
+djangorestframework = "*"
 
 [dev-packages]
 ruff = "*"
