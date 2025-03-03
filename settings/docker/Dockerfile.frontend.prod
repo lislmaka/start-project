@@ -1,0 +1,41 @@
+# syntax=docker/dockerfile:1
+
+FROM node:current-alpine as base
+ENV APP_ROOT /app
+ENV NODE_ENV production
+
+WORKDIR ${APP_ROOT}
+
+FROM base as build
+
+COPY ./frontend/package-lock.json ${APP_ROOT}
+COPY ./frontend/package.json ${APP_ROOT}
+
+RUN npm ci
+
+COPY ./frontend/ ${APP_ROOT}
+
+RUN npm run build
+
+
+FROM base
+
+COPY --from=build ${APP_ROOT}/node_modules ${APP_ROOT}/node_modules
+COPY --from=build ${APP_ROOT}/.output ${APP_ROOT}/.output
+
+CMD [ "node", ".output/server/index.mjs" ]
+
+# # RUN npm run build
+
+# # CMD ["npm", "run", "start"]
+
+# FROM base
+
+# COPY --from=build ${APP_ROOT}/node_modules ${APP_ROOT}/node_modules
+
+# WORKDIR ${APP_ROOT}
+
+# COPY ./frontend ${APP_ROOT}
+
+# RUN npm run build
+# CMD node .output/server/index.mjs
